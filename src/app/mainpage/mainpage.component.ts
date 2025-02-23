@@ -26,20 +26,22 @@ export class MainpageComponent {
 
   ngAfterViewInit() {
     window.addEventListener('message', (event) => {
-      if (event.data.mate) {
-        this.gameFinished = true;
-      }
+      if (event.data && typeof event.data === 'object') {
+        if (event.data.mate) {
+          this.gameFinished = true;
+        }
 
-      const lastTurnColor = event.data.color;
+        const lastTurnColor = event.data.color;
 
-      const targetIframe =
-        lastTurnColor === 'white'
-          ? this.blackBoardIframe
-          : this.whiteBoardIframe;
+        const targetIframe =
+          lastTurnColor === 'white'
+            ? this.blackBoardIframe
+            : this.whiteBoardIframe;
 
-      const targetWindow = targetIframe.nativeElement.contentWindow;
-      if (targetWindow) {
-        targetWindow.postMessage(event.data, this.getIframePageUrl());
+        if (targetIframe && targetIframe.nativeElement.contentWindow) {
+          const targetWindow = targetIframe.nativeElement.contentWindow;
+          targetWindow.postMessage(event.data, '*');
+        }
       }
     });
   }

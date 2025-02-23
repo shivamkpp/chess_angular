@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgxChessBoardView } from 'ngx-chess-board';
 import { ActivatedRoute } from '@angular/router';
 import { HistoryMove } from 'ngx-chess-board/lib/history-move-provider/history-move';
@@ -13,8 +13,6 @@ export class IframepageComponent {
   isWhiteBoard: boolean = false;
   lightTileColor: string = '#EEEED2';
   darkTileColor: string = '#769656';
-
-  @Input() onGameEnd!: () => void;
 
   @ViewChild('board', { static: false }) board!: NgxChessBoardView;
 
@@ -51,6 +49,9 @@ export class IframepageComponent {
     const lastMove = this.board.getMoveHistory().slice(-1)[0];
     window.parent.postMessage(lastMove, this.getMainPageUrl());
   }
+  getMainPageUrl(): string {
+    throw new Error('Method not implemented.');
+  }
 
   private handleResetEvent() {
     this.board.reset();
@@ -67,11 +68,9 @@ export class IframepageComponent {
     localStorage.setItem('board', this.board.getFEN());
 
     if (moveData.mate) {
-      this.onGameEnd();
+      const winner = moveData.color === 'white' ? 'White' : 'Black';
+      alert(`Checkmate! ${winner} wins!`);
+      window.parent.postMessage({ mate: true, color: moveData.color }, this.getMainPageUrl());
     }
-  }
-
-  private getMainPageUrl(): SafeResourceUrl {
-    return `${window.location.origin}/mainpage`;
   }
 }

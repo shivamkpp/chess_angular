@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgxChessBoardModule } from 'ngx-chess-board';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { MainpageComponent } from './mainpage/mainpage.component';
-import { IframepageComponent } from './iframepage/iframepage.component';
+import { ChessBoardComponent } from './chess-board/chess-board.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainpageComponent,
-    IframepageComponent
+    ChessBoardComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgxChessBoardModule.forRoot()
   ],
