@@ -16,6 +16,7 @@ export class MainpageComponent {
   gameFinished = false;
   iFrameWhiteBoardUrl: SafeResourceUrl = '';
   iFrameBlackBoardUrl: SafeResourceUrl = '';
+  resetButtonText: string = 'Reset';
 
   constructor(private router: Router, private sanitizer: DomSanitizer) { }
 
@@ -28,6 +29,7 @@ export class MainpageComponent {
     window.addEventListener('message', (event) => {
       if (event.data.mate) {
         this.gameFinished = true;
+        this.resetButtonText = 'Create New Game';
       }
 
       const lastTurnColor = event.data.color;
@@ -44,12 +46,27 @@ export class MainpageComponent {
     });
   }
 
+  onGameStart() {
+    const startData = { start: true };
+    this.whiteBoardIframe.nativeElement.contentWindow?.postMessage(
+      startData,
+      this.iFrameWhiteBoardUrl
+    );
+
+    this.blackBoardIframe.nativeElement.contentWindow?.postMessage(
+      startData,
+      this.iFrameBlackBoardUrl
+    );
+  }
+
   onGameEnd() {
     this.gameFinished = true;
+    this.resetButtonText = 'Create New Game';
   }
 
   reset() {
     this.gameFinished = false;
+    this.resetButtonText = 'Reset';
 
     const resetData = { reset: true };
 

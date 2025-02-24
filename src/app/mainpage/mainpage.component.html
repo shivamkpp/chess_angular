@@ -1,12 +1,13 @@
+
 <div class="game-wrapper">
   <button class="new-game-button reset-btn" (click)="reset()">
-    Reset
+    {{ resetButtonText }}
   </button>
   <div class="boards-container">
-    <iframe #white_board_iframe [src]="iFrameWhiteBoardUrl" height="550" width="550" class="test">
+    <iframe #black_board_iframe [src]="iFrameBlackBoardUrl" height="550" width="550" class="test">
     </iframe>
 
-    <iframe #black_board_iframe [src]="iFrameBlackBoardUrl" height="550" width="550" class="test">
+    <iframe #white_board_iframe [src]="iFrameWhiteBoardUrl" height="550" width="550" class="test">
     </iframe>
   </div>
 
@@ -45,7 +46,5 @@
         </div>
       </div>
     </div>
-
-
   </div>
 </div>

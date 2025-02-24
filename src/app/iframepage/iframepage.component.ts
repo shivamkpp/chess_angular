@@ -67,6 +67,8 @@ export class IframepageComponent {
     localStorage.setItem('board', this.board.getFEN());
 
     if (moveData.mate) {
+      const winner = this.isWhiteBoard ? "black" : "white"; 
+      alert(`Checkmate! ${winner} player wins!`);  
       this.onGameEnd();
     }
   }
